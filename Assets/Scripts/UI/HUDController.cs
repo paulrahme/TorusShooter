@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class HUDController : MonoBehaviour
 {
@@ -7,7 +7,7 @@ public class HUDController : MonoBehaviour
 
 	[Header("Revive")]
 	public GameObject reviveHierarchy;
-	public Text reviveTimeText;
+	public TMP_Text reviveTimeText;
 
 	#endregion	// Editor variables
 

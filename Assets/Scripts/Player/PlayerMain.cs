@@ -181,13 +181,12 @@ public class PlayerMain : MonoBehaviour
 		{
 			nextShotTime = Time.fixedTime + timeBetweenShots;
 
-			Vector3 forwardOffset = transform.forward * shotStartDistance;
-			Quaternion forwardRot = transform.rotation;
-
 			for (int i = 0; i < turrets.Length; ++i)
 			{
 				Transform turret = turrets[i];
 				GameObject shot = shotsPool.RetrieveOrCreate(shotPrefab);
+				Vector3 forwardOffset = turret.forward * shotStartDistance;
+				Quaternion forwardRot = turret.rotation;
 				shot.GetComponent<PlayerShot>().Shoot(turret.position + forwardOffset, forwardRot, shotMoveSpeed, shotLifetime);
 			}
 		}
