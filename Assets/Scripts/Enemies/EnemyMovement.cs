@@ -1,22 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-	#region Editor variables
+	#region Inspector variables
 
 	[Header("Rotation")]
-	[SerializeField] Transform baseTransform;
+	[SerializeField] Transform baseTransform = null;
 	[SerializeField] Vector3 rotateVelocity = new Vector3(0.0f, 50.0f, 0.0f);
 
 	[Header("Spiralling Outward")]
-	[SerializeField] Transform spiralTransform;
+	[SerializeField] Transform spiralTransform = null;
 	[SerializeField] Vector3 spiralVelocity = new Vector3(3.0f, 0.0f, 0.0f);
 	[SerializeField] float spiralMaxRadius = 40.0f;
 
 	[Header("Bobbing")]
-	[SerializeField] Transform childTransform;
+	[SerializeField] Transform childTransform = null;
 	[SerializeField] float bobFrequency = 3.14152f;
 	[SerializeField] Vector3 bobAmplitude = new Vector3(0.0f, 2.0f, 0.0f);
 
@@ -43,7 +41,7 @@ public class EnemyMovement : MonoBehaviour
 		isBobbing = (bobFrequency != 0.0f);
 	}
 
-	/// <summary> Called when object/script activates </summary>
+	/// <summary> Called when object/script first activates </summary>
 	void Awake()
 	{
 		bobBasePos = childTransform.localPosition;

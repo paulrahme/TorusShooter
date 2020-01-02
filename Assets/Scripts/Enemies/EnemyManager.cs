@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -10,26 +8,26 @@ public class EnemyManager : MonoBehaviour
 		Blue,
 	};
 
-	#region Editor variables
+	#region Inspector variables
 
 	[Header("Prefabs")]
-	[SerializeField] GameObject redEnemyPrefab;
-	[SerializeField] GameObject blueEnemyPrefab;
-	[SerializeField] GameObject shotPrefab;
+	[SerializeField] GameObject redEnemyPrefab = null;
+	[SerializeField] GameObject blueEnemyPrefab = null;
+	[SerializeField] GameObject shotPrefab = null;
 
 	#endregion	// Editor variables
 
 	RecycleStack shotsPool = new RecycleStack();
 
 	/// <summary> Singleton </summary>
-	public static EnemyManager Instance;
+	public static EnemyManager instance;
 
-	/// <summary> Called when object/script activates </summary>
+	/// <summary> Called when object/script first activates </summary>
 	void Awake()
 	{
-		if (Instance != null)
+		if (instance != null)
 			throw new UnityException("Singleton instance already exists");
-		Instance = this;
+		instance = this;
 
 		EnemyGenerator.ReadCSV();
 	}
@@ -39,7 +37,7 @@ public class EnemyManager : MonoBehaviour
 	public void Shoot(Enemy _enemy)
 	{
 		GameObject shot = shotsPool.RetrieveOrCreate(shotPrefab);
-		shot.GetComponent<EnemyShot>().Shoot(_enemy.transform.position, Quaternion.LookRotation((PlayerMain.Instance.transform.position - _enemy.transform.position).normalized), _enemy.shotMoveSpeed, _enemy.shotLifetime);
+		shot.GetComponent<EnemyShot>().Shoot(_enemy.transform.position, Quaternion.LookRotation((PlayerMain.instance.transform.position - _enemy.transform.position).normalized), _enemy.shotMoveSpeed, _enemy.shotLifetime);
 	}
 
 	/// <summary> Called when a shot timed out </summary>
@@ -55,7 +53,7 @@ public class EnemyManager : MonoBehaviour
 	{
 		shotsPool.Recycle(_shot.gameObject);
 
-		PlayerMain.Instance.OnHit(_shot);
+		PlayerMain.instance.OnHit(_shot);
 	}
 
 	/// <summary> Called once per frame </summary>

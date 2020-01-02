@@ -8,11 +8,11 @@ public class EnemyShot : Shot
 
 	protected override void OnHit(Collider collider)
 	{
-		EnemyManager.Instance.ShotHit(this);
+		EnemyManager.instance.ShotHit(this);
 	}
 
 	protected override void OnMissed()
 	{
-		EnemyManager.Instance.ShotMissed(this);
+		EnemyManager.instance.ShotMissed(this);
 	}
 }

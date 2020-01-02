@@ -58,7 +58,7 @@ public class Enemy : Collidable
 		else if (Time.fixedTime > timeToShoot)
 		{
 			CalcNextTimeToShoot();
-			EnemyManager.Instance.Shoot(this);
+			EnemyManager.instance.Shoot(this);
 		}
 	}
 
@@ -74,7 +74,7 @@ public class Enemy : Collidable
 
 	protected override void OnHit(Collider collider)
 	{
-		PlayerMain.Instance.OnHit(this);
+		PlayerMain.instance.OnHit(this);
 	}
 
 	#endregion	// Collidable overrides

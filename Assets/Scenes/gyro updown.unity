@@ -5534,6 +5534,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6663555166950071140, guid: 20f602cd30dbb6047a44f4fb449ae0e5,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20f602cd30dbb6047a44f4fb449ae0e5, type: 3}
 --- !u!4 &1767294542 stripped
@@ -5624,6 +5629,11 @@ PrefabInstance:
       propertyPath: levelPivot
       value: 
       objectReference: {fileID: 1702770852}
+    - target: {fileID: 4472384623504712826, guid: e70f161897711cb4c8368d40a7517861,
+        type: 3}
+      propertyPath: moveSpeedVert
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e70f161897711cb4c8368d40a7517861, type: 3}
 --- !u!4 &1791593945 stripped

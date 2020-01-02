@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerShotHitPFX : MonoBehaviour
 {
-	#region Editor variables
+	#region Inspector variables
 
-	[SerializeField] ParticleSystem pfx;
+	[SerializeField] ParticleSystem pfx = null;
 
 	#endregion	// Editor variables
 
@@ -14,6 +12,6 @@ public class PlayerShotHitPFX : MonoBehaviour
 	void Update()
 	{
 		if (!pfx.IsAlive())
-			PlayerMain.Instance.RecycleShotPFX(gameObject);
+			PlayerMain.instance.RecycleShotPFX(gameObject);
 	}
 }

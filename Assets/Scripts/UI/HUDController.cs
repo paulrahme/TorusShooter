@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class HUDController : MonoBehaviour
 {
-	#region Editor variables
+	#region Inspector variables
 
 	[Header("Revive")]
 	public GameObject reviveHierarchy;
@@ -14,13 +12,13 @@ public class HUDController : MonoBehaviour
 	#endregion	// Editor variables
 
 	/// <summary> Singleton </summary>
-	public static HUDController Instance;
+	public static HUDController instance;
 
-	/// <summary> Called when object/script activates </summary>
+	/// <summary> Called when object/script first activates </summary>
 	void Awake()
 	{
-		if (Instance != null)
+		if (instance != null)
 			throw new UnityException("Singleton instance already exists");
-		Instance = this;
+		instance = this;
 	}
 }

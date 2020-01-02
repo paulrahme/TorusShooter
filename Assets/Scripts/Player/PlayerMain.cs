@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMain : MonoBehaviour
 {
@@ -10,11 +8,11 @@ public class PlayerMain : MonoBehaviour
 	#region Inspector variables
 
 	[Header("Horizontal movement")]
-	[SerializeField] Transform parentPivot;
+	[SerializeField] Transform parentPivot = null;
 	[SerializeField] float moveHorizSpeed = 30.0f;
 	[SerializeField] float moveHorizBoostMult = 2.0f;
 	[Space(10)]
-	[SerializeField] VerticalMovementTypes verticalMovementType;
+	[SerializeField] VerticalMovementTypes verticalMovementType = VerticalMovementTypes.None;
 
 
 	[Header("Vertical movement (Cylindrical)")]
@@ -23,16 +21,16 @@ public class PlayerMain : MonoBehaviour
 
 	[Header("Level spinning on pivot")]
 	[SerializeField] float rotateSpeedPivotUpDown = 20.0f;
-	[SerializeField] Transform levelPivot;
+	[SerializeField] Transform levelPivot = null;
 
 	[Header("Mouse Movement")]
 	[SerializeField] float sensitivityVert = 1.0f;
 	[SerializeField] float sensitivityHoriz = 2.0f;
 
 	[Header("Shooting")]
-	[SerializeField] Transform[] turrets;
-	[SerializeField] GameObject shotPrefab;
-	[SerializeField] GameObject shotHitPFXPrefab;
+	[SerializeField] Transform[] turrets = null;
+	[SerializeField] GameObject shotPrefab = null;
+	[SerializeField] GameObject shotHitPFXPrefab = null;
 	[SerializeField] float timeBetweenShots = 0.2f;
 	[SerializeField] float shotStartDistance = 0.5f;
 	[SerializeField] float shotMoveSpeed = 30.0f;
@@ -53,14 +51,14 @@ public class PlayerMain : MonoBehaviour
 	float nextShotTime;
 
 	/// <summary> Singleton </summary>
-	public static PlayerMain Instance;
+	public static PlayerMain instance;
 
-	/// <summary> Called when object/script activates </summary>
+	/// <summary> Called when object/script first activates </summary>
 	void Awake()
 	{
-		if (Instance != null)
+		if (instance != null)
 			throw new UnityException("Singleton instance already exists");
-		Instance = this;
+		instance = this;
 
 		pivotEulerAngles = parentPivot.localEulerAngles;
 		eulerAngles = transform.localEulerAngles;
@@ -84,12 +82,12 @@ public class PlayerMain : MonoBehaviour
 		switch (state)
 		{
 			case States.Alive:
-				HUDController.Instance.reviveHierarchy.SetActive(false);
+				HUDController.instance.reviveHierarchy.SetActive(false);
 				break;
 
 			case States.Respawning:
 				respawnTime = Time.fixedTime + respawnDuration;
-				HUDController.Instance.reviveHierarchy.SetActive(true);
+				HUDController.instance.reviveHierarchy.SetActive(true);
 				break;
 
 			default:
@@ -112,7 +110,7 @@ public class PlayerMain : MonoBehaviour
 				if (Time.fixedTime > respawnTime)
 					SetState(States.Alive);
 				else
-					HUDController.Instance.reviveTimeText.text = ((int)(respawnTime - Time.fixedTime + 1.0f)).ToString();
+					HUDController.instance.reviveTimeText.text = ((int)(respawnTime - Time.fixedTime + 1.0f)).ToString();
 				break;
 
 			default:

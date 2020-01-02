@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DemoMazeMovement : MonoBehaviour
 {
 	[SerializeField] float moveSpeed = 1.0f;
 
+	/// <summary> Called once per frame </summary>
 	void Update()
 	{
 		RaycastHit hitInfo;

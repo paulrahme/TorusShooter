@@ -8,11 +8,11 @@ public class PlayerShot : Shot
 
 	protected override void OnHit(Collider collider)
 	{
-		PlayerMain.Instance.ShotHit(this, collider.gameObject);
+		PlayerMain.instance.ShotHit(this, collider.gameObject);
 	}
 
 	protected override void OnMissed()
 	{
-		PlayerMain.Instance.ShotMissed(this);
+		PlayerMain.instance.ShotMissed(this);
 	}
 }
