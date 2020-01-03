@@ -15,6 +15,9 @@ public class GameMaster : MonoBehaviour
 	[SerializeField] Transform playerParentPivot = null;
 	[SerializeField] Transform sceneryParent = null;
 
+	[Header("Managers")]
+	[SerializeField] EnemyManager enemyManager = null;
+
 	[Header("Tuning")]
 	[SerializeField] int startsToSpawn = 1000;
 	[SerializeField] float startMinDistance = 200;
@@ -24,7 +27,7 @@ public class GameMaster : MonoBehaviour
 
 	public static PlayerMain Player { get; private set; }
 	public static HUDController HUDController { get; private set; }
-	public static Transform LevelPivot { get => instance.torusParentPivot; }
+	public static Transform LevelPivot { get => instance.torusParentPivot; }	
 
 	static GameMaster instance;
 
@@ -53,5 +56,22 @@ public class GameMaster : MonoBehaviour
 			starPos = Random.insideUnitSphere.normalized * Random.Range(startMinDistance, startMaxDistance);
 			Instantiate(starPrefab, starPos, Quaternion.Euler(starPos.normalized), sceneryParent);
 		}
+	}
+
+	/// <summary> Called when a shot timed out </summary>
+	/// <param name="_shot"> Shot's script </param>
+	public static void EnemyShotMissed(EnemyShot _shot)
+	{
+		instance.enemyManager.RecycleShot(_shot);
+	}
+
+	/// <summary> Called when a shot hit something </summary>
+	/// <param name="_shot"> Shot's script </param>
+	public static void EnemyShotHit(EnemyShot _shot)
+	{
+		instance.enemyManager.RecycleShot(_shot);
+
+		if (Player.IsAlive && !Player.IsInvincible)
+			Player.OnHit(_shot);
 	}
 }

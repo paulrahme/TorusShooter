@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyShot : Shot
 {
@@ -8,11 +6,11 @@ public class EnemyShot : Shot
 
 	protected override void OnHit(Collider collider)
 	{
-		EnemyManager.instance.ShotHit(this);
+		GameMaster.EnemyShotHit(this);
 	}
 
 	protected override void OnMissed()
 	{
-		EnemyManager.instance.ShotMissed(this);
+		GameMaster.EnemyShotMissed(this);
 	}
 }

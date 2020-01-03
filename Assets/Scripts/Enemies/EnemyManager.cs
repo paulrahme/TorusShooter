@@ -40,20 +40,11 @@ public class EnemyManager : MonoBehaviour
 		shot.GetComponent<EnemyShot>().Shoot(_enemy.transform.position, Quaternion.LookRotation((GameMaster.Player.transform.position - _enemy.transform.position).normalized), _enemy.shotMoveSpeed, _enemy.shotLifetime);
 	}
 
-	/// <summary> Called when a shot timed out </summary>
-	/// <param name="_shot"> Shot's script </param>
-	public void ShotMissed(EnemyShot _shot)
+	/// <summary> Recycle a shot ready for re-use </summary>
+	/// <param name="_shot"> Shot's component </param>
+	public void RecycleShot(EnemyShot _shot)
 	{
 		shotsPool.Recycle(_shot.gameObject);
-	}
-
-	/// <summary> Called when a shot hit something </summary>
-	/// <param name="_shot"> Shot's script </param>
-	public void ShotHit(EnemyShot _shot)
-	{
-		shotsPool.Recycle(_shot.gameObject);
-
-		GameMaster.Player.OnHit(_shot);
 	}
 
 	/// <summary> Called once per frame </summary>

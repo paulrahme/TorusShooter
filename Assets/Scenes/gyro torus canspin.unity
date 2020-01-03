@@ -5970,6 +5970,7 @@ MonoBehaviour:
   torusParentPivot: {fileID: 737046951}
   playerParentPivot: {fileID: 3460138246226957914}
   sceneryParent: {fileID: 1179830697}
+  enemyManager: {fileID: 2143483098}
   startsToSpawn: 1000
   startMinDistance: 200
   startMaxDistance: 700

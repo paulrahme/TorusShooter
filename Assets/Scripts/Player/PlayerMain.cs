@@ -11,22 +11,22 @@ public class PlayerMain : MonoBehaviour
 	[SerializeField] Camera mainCamera = null;
 
 	[Header("Horizontal movement")]
-	[SerializeField] float moveHorizSpeed = 30.0f;
-	[SerializeField] float moveHorizBoostMult = 2.0f;
-	[Space(10)]
+	[SerializeField] float moveHorizSpeed = 30f;
+	[SerializeField] float moveHorizBoostMult = 2f;
+	[Space(10f)]
 	[SerializeField] VerticalMovementTypes verticalMovementType = VerticalMovementTypes.None;
 
 
 	[Header("Vertical movement (Cylindrical)")]
-	[SerializeField] float moveSpeedVert = 10.0f;
-	[SerializeField] float verticalLimit = 15.0f;
+	[SerializeField] float moveSpeedVert = 10f;
+	[SerializeField] float verticalLimit = 15f;
 
 	[Header("Level spinning on pivot")]
-	[SerializeField] float rotateSpeedPivotUpDown = 20.0f;
+	[SerializeField] float rotateSpeedPivotUpDown = 20f;
 
 	[Header("Mouse Movement")]
-	[SerializeField] float sensitivityVert = 1.0f;
-	[SerializeField] float sensitivityHoriz = 2.0f;
+	[SerializeField] float sensitivityVert = 1f;
+	[SerializeField] float sensitivityHoriz = 2f;
 
 	[Header("Shooting")]
 	[SerializeField] Transform[] turrets = null;
@@ -34,14 +34,20 @@ public class PlayerMain : MonoBehaviour
 	[SerializeField] GameObject shotHitPFXPrefab = null;
 	[SerializeField] float timeBetweenShots = 0.2f;
 	[SerializeField] float shotStartDistance = 0.5f;
-	[SerializeField] float shotMoveSpeed = 30.0f;
-	[SerializeField] float shotLifetime = 2.0f;
+	[SerializeField] float shotMoveSpeed = 30f;
+	[SerializeField] float shotLifetime = 2f;
 
-	[Header("Death")]
-	[SerializeField] float respawnDuration = 3.0f;
+	[Header("Death + Revive")]
+	[SerializeField] float respawnDuration = 1f;
+	[SerializeField] float respawnInvincibleDuration = 2f;
+	[SerializeField] GameObject invincibilityHierarchy = null;
+	[SerializeField] Renderer invinsibilityMainRenderer = null;
+	[SerializeField] AnimationCurve invincibleFadeAnim = new AnimationCurve(new Keyframe(0f, 1f), new Keyframe(1f, 0f));
 
 	#endregion    // Editor variables
 
+	public bool IsAlive => (state == States.Alive);
+	public bool IsInvincible => (invincibleEndTime != 0f);
 	public Transform MainCameraTransform { get; private set; }
 
 	Transform parentPivot;
@@ -53,6 +59,9 @@ public class PlayerMain : MonoBehaviour
 	RecycleStack shotPFXPool = new RecycleStack();
 	float respawnTime;
 	float nextShotTime;
+	float invincibleEndTime;
+	Material invincibleEffectMaterial;
+	Color invincibleEffectColor;
 
 	/// <summary> Initialise function called upon spawning </summary>
 	/// <param name="_parentPivot"> Transform this is tethered to, for rotating around the centre </param>
@@ -64,6 +73,10 @@ public class PlayerMain : MonoBehaviour
 		localPosition = transform.localPosition;
 
 		MainCameraTransform = mainCamera.transform;
+
+		invincibilityHierarchy.SetActive(false);
+		invincibleEffectMaterial = invinsibilityMainRenderer.material;
+		invincibleEffectColor = invincibleEffectMaterial.color;
 	}
 
 	/// <summary> Called before first Update() </summary>
@@ -100,20 +113,42 @@ public class PlayerMain : MonoBehaviour
 		switch (state)
 		{
 			case States.Alive:
+				if (IsInvincible)
+					UpdateInvincibility();
 				UpdateKeyboardMovement();
-				UpdateMouseLook();
+				//UpdateMouseLook();
 				UpdateShooting();
 				break;
 
 			case States.Respawning:
 				if (Time.fixedTime > respawnTime)
+				{
+					invincibleEndTime = Time.time + respawnInvincibleDuration;
+					invincibilityHierarchy.SetActive(true);
 					SetState(States.Alive);
+				}
 				else
 					GameMaster.HUDController.reviveTimeText.text = ((int)(respawnTime - Time.fixedTime + 1.0f)).ToString();
 				break;
 
 			default:
 				throw new UnityException("Unhandled Player state " + state);
+		}
+	}
+
+	/// <summary> Updates the invincibility effect + timer </summary>
+	void UpdateInvincibility()
+	{
+		float timeLeft = invincibleEndTime - Time.time;
+		if (timeLeft > 0f)
+		{
+			invincibleEffectColor.a = invincibleFadeAnim.Evaluate(1f - (timeLeft / respawnInvincibleDuration));
+			invinsibilityMainRenderer.material.color = invincibleEffectColor;
+		}
+		else
+		{
+			invincibleEndTime = 0f;
+			invincibilityHierarchy.SetActive(false);
 		}
 	}
 
@@ -173,10 +208,10 @@ public class PlayerMain : MonoBehaviour
 	/// <summary> Updates shooting into the screen </summary>
 	void UpdateShooting()
 	{
-		if (Input.GetMouseButtonDown(0))
+		if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
 			nextShotTime = 0.0f;
 
-		if (Input.GetMouseButton(0) && (Time.fixedTime > nextShotTime))
+		if ((Input.GetMouseButton(0) || Input.GetKey(KeyCode.Space)) && (Time.fixedTime > nextShotTime))
 		{
 			nextShotTime = Time.fixedTime + timeBetweenShots;
 
