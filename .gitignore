@@ -3,6 +3,7 @@ Temp/
 Obj/
 Build/
 .vs/
+.DS_Store
 
 *.sln
 *.csproj
