@@ -8,10 +8,17 @@ public class GameMaster : MonoBehaviour
 	[SerializeField] GameObject torusPrefab = null;
 	[SerializeField] PlayerMain playerPrefab = null;
 	[SerializeField] GameObject UIPrefab = null;
+	[SerializeField] GameObject starPrefab = null;
 
 	[Header("Hierarchy")]
 	[SerializeField] Transform torusParentPivot = null;
 	[SerializeField] Transform playerParentPivot = null;
+	[SerializeField] Transform sceneryParent = null;
+
+	[Header("Tuning")]
+	[SerializeField] int startsToSpawn = 1000;
+	[SerializeField] float startMinDistance = 200;
+	[SerializeField] float startMaxDistance = 700;
 
 	#endregion
 
@@ -38,5 +45,13 @@ public class GameMaster : MonoBehaviour
 			throw new UnityException("Could not find HUDController component anywhere under '" + UIPrefab.name + "'");
 
 		Cursor.lockState = CursorLockMode.Locked;
+
+		// Spawn randomn stars
+		Vector3 starPos = Vector3.zero;
+		for (int i = 0; i < startsToSpawn; ++i)
+		{
+			starPos = Random.insideUnitSphere.normalized * Random.Range(startMinDistance, startMaxDistance);
+			Instantiate(starPrefab, starPos, Quaternion.Euler(starPos.normalized), sceneryParent);
+		}
 	}
 }

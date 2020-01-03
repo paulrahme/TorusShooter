@@ -5965,8 +5965,14 @@ MonoBehaviour:
   playerPrefab: {fileID: 4472384623504712826, guid: e70f161897711cb4c8368d40a7517861,
     type: 3}
   UIPrefab: {fileID: 227619510071625441, guid: b8dbec960d9d8194294dc5be3a35aea2, type: 3}
+  starPrefab: {fileID: 6341741060788709892, guid: 50496e5db6e39574da16f6af5580bee5,
+    type: 3}
   torusParentPivot: {fileID: 737046951}
   playerParentPivot: {fileID: 3460138246226957914}
+  sceneryParent: {fileID: 1179830697}
+  startsToSpawn: 1000
+  startMinDistance: 200
+  startMaxDistance: 700
 --- !u!1 &1707501976
 GameObject:
   m_ObjectHideFlags: 0
