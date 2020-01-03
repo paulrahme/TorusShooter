@@ -37,7 +37,7 @@ public class EnemyManager : MonoBehaviour
 	public void Shoot(Enemy _enemy)
 	{
 		GameObject shot = shotsPool.RetrieveOrCreate(shotPrefab);
-		shot.GetComponent<EnemyShot>().Shoot(_enemy.transform.position, Quaternion.LookRotation((PlayerMain.instance.transform.position - _enemy.transform.position).normalized), _enemy.shotMoveSpeed, _enemy.shotLifetime);
+		shot.GetComponent<EnemyShot>().Shoot(_enemy.transform.position, Quaternion.LookRotation((GameMaster.Player.transform.position - _enemy.transform.position).normalized), _enemy.shotMoveSpeed, _enemy.shotLifetime);
 	}
 
 	/// <summary> Called when a shot timed out </summary>
@@ -53,7 +53,7 @@ public class EnemyManager : MonoBehaviour
 	{
 		shotsPool.Recycle(_shot.gameObject);
 
-		PlayerMain.instance.OnHit(_shot);
+		GameMaster.Player.OnHit(_shot);
 	}
 
 	/// <summary> Called once per frame </summary>

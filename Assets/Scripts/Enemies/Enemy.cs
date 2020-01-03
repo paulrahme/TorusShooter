@@ -74,7 +74,7 @@ public class Enemy : Collidable
 
 	protected override void OnHit(Collider collider)
 	{
-		PlayerMain.instance.OnHit(this);
+		GameMaster.Player.OnHit(this);
 	}
 
 	#endregion	// Collidable overrides

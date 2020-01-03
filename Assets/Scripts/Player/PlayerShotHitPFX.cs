@@ -12,6 +12,6 @@ public class PlayerShotHitPFX : MonoBehaviour
 	void Update()
 	{
 		if (!pfx.IsAlive())
-			PlayerMain.instance.RecycleShotPFX(gameObject);
+			GameMaster.Player.RecycleShotPFX(gameObject);
 	}
 }
