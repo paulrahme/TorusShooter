@@ -110,12 +110,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 7933154785227189223}
-  moveHorizSpeed: 30
-  moveHorizBoostMult: 2
+  moveHorizSpeed: 10
+  moveHorizBoostMult: 0.5
   verticalMovementType: 2
   moveSpeedVert: 0
   verticalLimit: 15
-  rotateSpeedPivotUpDown: 20
+  rotateSpeedPivotUpDown: 15
   sensitivityVert: 1
   sensitivityHoriz: 2
   turrets:
@@ -126,7 +126,7 @@ MonoBehaviour:
     type: 3}
   timeBetweenShots: 0.2
   shotStartDistance: 0.7
-  shotMoveSpeed: 60
+  shotMoveSpeed: 80
   shotLifetime: 2
   respawnDuration: 1
   respawnInvincibleDuration: 2

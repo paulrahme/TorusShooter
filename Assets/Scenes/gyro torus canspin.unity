@@ -7716,6 +7716,8 @@ MonoBehaviour:
     type: 3}
   blueEnemyPrefab: {fileID: 1879508381592352, guid: 3d585d8fa389d4c09be2a43e5dbb005c,
     type: 3}
+  monkeyHeadEnemyPrefab: {fileID: 1879508381592352, guid: b683b9406212fb14e86550f74a33e74d,
+    type: 3}
   shotPrefab: {fileID: 1983881379229016, guid: caa98b757a13a4df6ab28c447eae4727, type: 3}
 --- !u!1 &3460138246226957913
 GameObject:

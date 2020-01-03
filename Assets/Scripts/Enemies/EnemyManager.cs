@@ -6,6 +6,7 @@ public class EnemyManager : MonoBehaviour
 	{
 		Red,
 		Blue,
+		MonkeyHead,
 	};
 
 	#region Inspector variables
@@ -13,6 +14,7 @@ public class EnemyManager : MonoBehaviour
 	[Header("Prefabs")]
 	[SerializeField] GameObject redEnemyPrefab = null;
 	[SerializeField] GameObject blueEnemyPrefab = null;
+	[SerializeField] GameObject monkeyHeadEnemyPrefab = null;
 	[SerializeField] GameObject shotPrefab = null;
 
 	#endregion	// Editor variables
@@ -64,8 +66,9 @@ public class EnemyManager : MonoBehaviour
 		GameObject gameObj;
 		switch (_info.enemyType)
 		{
-			case EnemyTypes.Red:	gameObj = GameObject.Instantiate(redEnemyPrefab);	break;
-			case EnemyTypes.Blue:	gameObj = GameObject.Instantiate(blueEnemyPrefab);	break;
+			case EnemyTypes.Red:		gameObj = GameObject.Instantiate(redEnemyPrefab); break;
+			case EnemyTypes.Blue:		gameObj = GameObject.Instantiate(blueEnemyPrefab); break;
+			case EnemyTypes.MonkeyHead:	gameObj = GameObject.Instantiate(monkeyHeadEnemyPrefab); break;
 
 			default: throw new UnityException("Unhandled Enemy Type " + _info.enemyType);
 		}
